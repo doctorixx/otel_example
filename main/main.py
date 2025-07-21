@@ -1,18 +1,17 @@
+import atexit
+import uuid
 from random import randint
-import requests
-import time
 
-from flask import Flask, jsonify, request
+import requests
+from flask import Flask, jsonify
 from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-from opentelemetry.sdk.resources import Resource
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.propagate import inject
-import uuid
-import atexit
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
 
 app = Flask(__name__)
 
@@ -27,7 +26,7 @@ trace.set_tracer_provider(tracer_provider)
 
 # Configure exporters
 otlp_exporter = OTLPSpanExporter(
-    endpoint="http://localhost:4318/v1/traces",
+    endpoint="http://jaeger:4318/v1/traces",
 )
 console_exporter = ConsoleSpanExporter()
 
@@ -227,6 +226,6 @@ atexit.register(shutdown)
 if __name__ == "__main__":
     try:
         print("Starting Dice Roller Service on port 5000...")
-        app.run(debug=True, port=5000)
+        app.run(debug=True, port=5000, host="0.0.0.0")
     finally:
         shutdown()

@@ -10,12 +10,12 @@ def test_services():
 
     # Test endpoints
     endpoints = [
-        ("GET", "http://localhost:5000/", "Main service - dice roll + user"),
-        ("GET", "http://localhost:5000/roll", "Dice roll only"),
-        ("GET", "http://localhost:5001/health", "User service health"),
-        ("GET", "http://localhost:5001/users/random", "Random user"),
-        ("GET", "http://localhost:5000/user/1", "Get specific user via main service"),
-        ("GET", "http://localhost:5000/user/999", "Get non-existent user (error case)"),
+        ("GET", "http://roll-service:5000/", "Main service - dice roll + user"),
+        ("GET", "http://roll-service:5000/roll", "Dice roll only"),
+        ("GET", "http://user-service:5001/health", "User service health"),
+        ("GET", "http://user-service:5001/users/random", "Random user"),
+        ("GET", "http://roll-service:5000/user/1", "Get specific user via main service"),
+        ("GET", "http://roll-service:5000/user/999", "Get non-existent user (error case)"),
     ]
 
     for method, url, description in endpoints:

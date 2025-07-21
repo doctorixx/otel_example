@@ -26,7 +26,7 @@ trace.set_tracer_provider(tracer_provider)
 
 # Configure exporters
 otlp_exporter = OTLPSpanExporter(
-    endpoint="http://localhost:4318/v1/traces",
+    endpoint="http://jaeger:4318/v1/traces",
 )
 console_exporter = ConsoleSpanExporter()
 
@@ -138,6 +138,6 @@ atexit.register(shutdown)
 if __name__ == "__main__":
     try:
         print("Starting User Service on port 5001...")
-        app.run(debug=True, port=5001)
+        app.run(debug=True, port=5001, host="0.0.0.0")
     finally:
         shutdown()
